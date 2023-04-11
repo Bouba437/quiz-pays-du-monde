@@ -20,6 +20,9 @@ function startApplication(datas) {
         };
         listePays.push(pays);
     }
+    debuterJeu();
+}
+function debuterJeu() {
     randomPays = getRandomPays(listePays);
     document.querySelector("#drapeau").innerHTML = `<img src="${randomPays.drapeau}"/ width="250px" class="border border-dark" alt="${randomPays.nom}">`;
     const bonneReponse = randomPays.nom;
@@ -53,7 +56,7 @@ function verificationReponse(reponse) {
     else {
         divResultat.innerHTML = `<div class="alert alert-danger mt-2" role="alert">Mauvaise réponse.</div>`;
     }
-    divResultat.innerHTML += `<button class="btn btn-warning mt-1" onClick="startApplication()">Changer de pays</button>`;
+    divResultat.innerHTML += `<button class="btn btn-warning mt-1" onClick="debuterJeu()">Changer de pays</button>`;
 }
 function getRandomPays(listePays) {
     let random = Math.floor(Math.random() * listePays.length);
