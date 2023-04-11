@@ -27,15 +27,33 @@ function startApplication(datas) {
     const mauvaiseReponse2 = getRandomPays(listePays).nom;
     const mauvaiseReponse3 = getRandomPays(listePays).nom;
     let optionsReponse = [bonneReponse, mauvaiseReponse1, mauvaiseReponse2, mauvaiseReponse3];
-    optionsReponse = trieTableau(optionsReponse);
+    optionsReponse = melangeTableau(optionsReponse);
+    document.querySelector("#boutons").innerHTML = genererBoutonsReponse(optionsReponse);
 }
-function trieTableau(tab) {
+function melangeTableau(tab) {
     let radomTab = tab;
     for (let i = radomTab.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [radomTab[i], radomTab[j]] = [radomTab[j], radomTab[i]];
     }
     return radomTab;
+}
+function genererBoutonsReponse(tab) {
+    let boutonsHTML = "";
+    for (let nom of tab) {
+        boutonsHTML += `<button class="btn btn-primary me-1 mt-1" onClick="verificationReponse('${nom}')">${nom}</button>`;
+    }
+    return boutonsHTML;
+}
+function verificationReponse(reponse) {
+    const divResultat = document.querySelector("#resultat");
+    if (reponse === randomPays.nom) {
+        divResultat.innerHTML = `<div class="alert alert-success mt-2" role="alert">${reponse} est la onne réponse.</div>`;
+    }
+    else {
+        divResultat.innerHTML = `<div class="alert alert-danger mt-2" role="alert">Mauvaise réponse.</div>`;
+    }
+    divResultat.innerHTML += `<button class="btn btn-warning mt-1" onClick="startApplication()">Changer de pays</button>`;
 }
 function getRandomPays(listePays) {
     let random = Math.floor(Math.random() * listePays.length);
