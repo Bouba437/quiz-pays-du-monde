@@ -22,7 +22,7 @@ type Name = {
 type Datas = {
   translations: {
     fr: {
-      official: string,
+      common: string,
       [props:string]: string,
     };
     [props:string]: any;
@@ -39,14 +39,31 @@ let randomPays: Pays;
 function startApplication(datas: Datas[]) {
   for (let unPays of datas) {
     const pays: Pays = {
-      nom: unPays.translations.fra.official,
+      nom: unPays.translations.fra.common,
       drapeau: unPays.flags.svg,
     }
     listePays.push(pays);    
   }
   randomPays = getRandomPays(listePays);
   document.querySelector("#drapeau")!.innerHTML = `<img src="${randomPays.drapeau}"/ width="250px" class="border border-dark" alt="${randomPays.nom}">`;
-    
+
+  const bonneReponse = randomPays.nom;
+  const mauvaiseReponse1 = getRandomPays(listePays).nom;
+  const mauvaiseReponse2 = getRandomPays(listePays).nom;
+  const mauvaiseReponse3 = getRandomPays(listePays).nom;
+
+  let optionsReponse: string[] = [bonneReponse, mauvaiseReponse1, mauvaiseReponse2, mauvaiseReponse3];
+  
+  optionsReponse = trieTableau(optionsReponse);
+}
+
+function trieTableau(tab: any[]) {
+  let radomTab = tab;
+  for (let i = radomTab.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [radomTab[i], radomTab[j]] = [radomTab[j], radomTab[i]];
+  }
+  return radomTab;
 }
 
 function getRandomPays(listePays: Pays[]): Pays {
