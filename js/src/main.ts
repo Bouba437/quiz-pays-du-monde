@@ -44,7 +44,9 @@ function startApplication(datas: Datas[]) {
     }
     listePays.push(pays);    
   }
-  console.log(listePays);  
+  randomPays = getRandomPays(listePays);
+  document.querySelector("#drapeau")!.innerHTML = `<img src="${randomPays.drapeau}"/ width="250px" class="border border-dark" alt="${randomPays.nom}">`;
+    
 }
 
 function getRandomPays(listePays: Pays[]): Pays {
